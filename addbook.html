@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            opacity: 0.95;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #007BFF;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+
+        label {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .required::after {
+            content: "*";
+            color: red;
+        }
+
+        input[type="text"], input[type="file"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="file"]:focus, input[type="number"]:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        /* Media queries for responsive design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            h2 {
+                font-size: 1.8em;
+            }
+        }
+
+        /* Confirmation dialog styling (optional) */
+        .form-floating input {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Add Book</h2>
+        <form id="addBookForm" action="/addbook" method="post" enctype="multipart/form-data">
+            <div class="form-floating">
+                <label for="bookId" class="required">Book ID</label>
+                <input class="form-control" id="bookId" type="text" placeholder="Enter Book ID" name="book_id" required />
+            </div>
+
+            <div class="form-floating">
+                <label for="bookName" class="required">Book Name</label>
+                <input class="form-control" id="bookName" type="text" placeholder="Enter Book Name" name="name" required />
+            </div>
+
+            <div class="form-floating">
+                <label for="writer" class="required">Writer</label>
+                <input class="form-control" id="writer" type="text" placeholder="Enter Writer's Name" name="writer" required />
+            </div>
+
+            <div class="form-floating">
+                <label for="copy" class="required">Copy</label>
+                <input class="form-control" id="copy" type="number" placeholder="Enter Number of Copies" name="copy" required />
+            </div>
+
+            <div class="form-floating">
+                <label for="pdfFile" class="required">PDF File</label>
+                <input type="file" id="pdfFile" name="pdf_file" accept="application/pdf" required />
+            </div>
+
+            <button id="submitButton" type="submit">Add Book</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("addBookForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            if (confirm("Do you really want to add the book?")) {
+                this.submit();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MITAOE_LIBRARAY{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Customize the navbar */
+        .navbar {
+            background-color: #007BFF;
+        }
+
+        .navbar-brand {
+            color: white !important; /* Change the color of the navbar brand */
+            font-weight: bold; /* Make the brand bold */
+        }
+
+        .navbar-toggler-icon {
+            color: white; /* Change color of the toggler icon */
+        }
+
+        .navbar-nav .nav-link {
+            color: white !important; /* Change the color of nav links */
+            margin-right: 10px; /* Add some margin to separate nav links */
+            font-size: 18px; /* Increase the font size */
+        }
+
+        .navbar-nav .nav-link:last-child {
+            margin-right: 0; /* Remove margin from the last nav link */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa !important; /* Change color of nav links on hover */
+        }
+
+        /* Social media icons */
+        .social-icons i {
+            font-size: 24px;
+            margin-right: 10px;
+            color: #007BFF;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" >MIT Academy</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page content -->
+<div class="container-fluid">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>Connect with us:</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <p>&copy; MIT Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

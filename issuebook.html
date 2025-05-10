@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Issue Book By Students</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        h3 {
+            color: #007BFF;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .mark-returned {
+            padding: 12px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .mark-returned:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .late-charge {
+            color: #FF0000;
+            font-weight: bold;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .search-button {
+            padding: 12px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .search-button:hover, .mark-returned:hover {
+            background-color: #0056b3;
+        }
+
+        .tbody-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 20%;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 15%;
+        }
+
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 15%;
+        }
+
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 15%;
+        }
+
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 15%;
+        }
+
+        th:nth-child(6),
+        td:nth-child(6) {
+            width: 10%;
+        }
+
+        th:nth-child(7),
+        td:nth-child(7) {
+            width: 10%;
+        }
+
+        /* Style for the student profile link */
+        .student-profile-link {
+            color: #007BFF;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Issue Book</h2>
+
+    <!-- Search Form -->
+    <form method="post" action="/issuebook" class="search-bar">
+        <input class="search-input" type="text" name="search_query" placeholder="Search Book, PRN, or ID" value="{{ search_query }}">
+        <button class="search-button" type="submit">Search</button>
+    </form>
+
+    <h3>Applied Books:</h3>
+
+    <!-- Table Container -->
+    <div class="table-container">
+        <!-- Table Header -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Book Name</th>
+                    <th>PRN</th>
+                    <th>ID</th>
+                    <th>Issue Date</th>
+                    <th>Return Date</th>
+                    <th>Late Charge</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+        </table>
+
+        <!-- Table Body Container with Scroll -->
+        <div class="tbody-container">
+            <!-- Table Body -->
+            <table>
+                <tbody>
+                    {% for entry in applied_entries %}
+                        <tr>
+                            <td>{{ entry.book.name }}</td>
+                            <td><a href="{{ url_for('student_profile', prn=entry.prn) }}" class="student-profile-link">{{ entry.prn }}</a></td>
+                            <td>{{ entry.b_id }}</td>
+                            <td>{{ entry.i_date }}</td>
+                            <td>{{ entry.r_date }}</td>
+                            <td class="late-charge">{{ entry.late_return_charge }} Rs</td>
+                            <td>
+                                <form method="POST" action="/mark_returned/{{ entry.app_id }}">
+                                    {% if entry.r_date is none %}
+                                        <button type="button" name="mark_returned" class="mark-returned" onclick="confirmReturn('{{ entry.app_id }}')">Mark Returned</button>
+                                    {% else %}
+                                        <button type="button" name="mark_returned" class="mark-returned" disabled>Already Returned</button>
+                                    {% endif %}
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function confirmReturn(appId) {
+            // Display a confirmation dialog
+            if (confirm("Are you sure you want to mark this book as returned?")) {
+                // If the user confirms, submit the form
+                document.querySelector(`form[action="/mark_returned/${appId}"]`).submit();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+{% extends "hello.html" %}
+{% block content %}
+    <h2>Welcome, {{ student_name }}</h2>
+    <p>PRN: {{ student_prn }}</p>
+
+    <!-- Search Form -->
+    <form method="post" action="/dashboard" class="search-bar">
+        <input class="search-input" type="text" name="search_query" placeholder="Search Book by Name or Author" value="{{ search_query }}">
+        <button class="search-button" type="submit">Search</button>
+    </form>
+
+    <!-- Table container with scrollable content -->
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sno</th>
+                    <th>Book Id</th>
+                    <th>Name</th>
+                    <th>Writer</th>
+                    <th>Copy</th>
+                    <th> PDF</th>
+                    <th>Apply</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ book.b_id }}</td>
+                    <td>{{ book.name }}</td>
+                    <td>{{ book.writer }}</td>
+                    <td>{{ book.copy }}</td>
+                    <td>
+                        {% if book.pdf %}
+                            <a href="{{ url_for('view_pdf', book_id=book.b_id) }}">View PDF</a> |
+                            <a href="{{ url_for('download_pdf', book_id=book.b_id) }}">Download PDF</a>
+                        {% else %}
+                            No PDF
+                        {% endif %}
+                    </td>
+                    <td><a href="/apply/{{ book.b_id }}/{{ book.name }}"><button class="btn btn-primary text-uppercase">Apply</button></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+<!-- Pagination links -->
+    <div class="pagination-links">
+        {% if books.has_prev %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ books.prev_num }}">&lsaquo; Prev</a>
+        {% endif %}
+
+        {% for page_num in books.iter_pages() %}
+            {% if page_num %}
+                {% if books.page == page_num %}
+                    <strong>{{ page_num }}</strong>
+                {% else %}
+                    <a href="?page={{ page_num }}">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+
+        {% if books.has_next %}
+            <a href="?page={{ books.next_num }}">Next &rsaquo;</a>
+            <a href="?page={{ books.pages }}">Last &raquo;</a>
+        {% endif %}
+    </div>
+
+    <a href="/applied_history"><button class="btn btn-primary text-uppercase">Applied History</button></a>
+    <a href="/logout"><button class="btn btn-primary text-uppercase">Log Out</button></a>
+
+    <style>
+        /* Styling for scrollable table */
+        .table-container {
+            max-height: 400px; /* Adjust the height as per your requirement */
+            overflow-y: auto;
+        }
+    </style>
+{% endblock %}

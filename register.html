@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 14px;
+            margin-top: -8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="/register" onsubmit="return validateForm()">
+        <h2>Student Registration</h2>
+        <label for="name">Full Name:</label>
+        <input type="text" name="name" id="name" placeholder="Full Name" required>
+
+        <label for="prn">PRN:</label>
+        <input type="text" name="prn" id="prn" placeholder="PRN" required>
+
+        <label for="branch">Branch:</label>
+        <input type="text" name="branch" id="branch" placeholder="Branch" required>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" placeholder="Email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" placeholder="Password" required>
+
+        <label for="phone_num">Phone Number:</label>
+        <input type="tel" name="phone_num" id="phone_num" placeholder="Phone Number" required>
+
+        <input type="submit" value="Register">
+    </form>
+
+    <script>
+        function validateForm() {
+            var prn = document.getElementById('prn').value;
+            var phoneNumber = document.getElementById('phone_num').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            if (!/^\d+$/.test(prn) || prn.length !== 12) {
+                alert('PRN must be 12 digits.');
+                return false;
+            }
+
+            if (!/^\d+$/.test(phoneNumber) || phoneNumber.length !== 10) {
+                alert('Phone Number must be 10 digits.');
+                return false;
+            }
+
+            // Email validation using a regular expression
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Invalid email address.');
+                return false;
+            }
+
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters.');
+                return false;
+            }
+
+            // Password complexity validation
+            var uppercaseRegex = /[A-Z]/;
+            var lowercaseRegex = /[a-z]/;
+            var specialCharRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
+
+            if (!uppercaseRegex.test(password) || !lowercaseRegex.test(password) || !specialCharRegex.test(password)) {
+                alert('Password must contain at least one uppercase letter, one lowercase letter, and one special character.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>
