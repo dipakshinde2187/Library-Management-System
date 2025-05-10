@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applied Book History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .search-button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .scrollable-table {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .book-history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        a.btn-back {
+            display: block;
+            margin-top: 20px;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        a.btn-back:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Applied Book History</h1>
+
+        <!-- Search Form -->
+        <form method="post" action="/applied_history" class="search-bar">
+            <input class="search-input" type="text" name="search_query" placeholder="Search by Book Name" value="{{ search_query }}">
+            <button class="search-button" type="submit">Search</button>
+        </form>
+
+        <div class="scrollable-table">
+            <table class="book-history-table">
+                <thead>
+                    <tr>
+                        <th>Book Name</th>
+                        <th>Issue Date</th>
+                        <th>Return Date</th>
+                        <th>Due date</th>
+                        <th>Charge</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in applied_entries | reverse %}
+                        <tr>
+                            <td>{{ entry.b_name }}</td>
+                            <td>{{ entry.i_date }}</td>
+                            <td>{{ entry.r_date }}</td>
+                            <td>{{ entry.due_date }} {{ entry.due_time }}</td>
+                            <td>{{ entry.late_return_charge }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="/dashboard" class="btn-back">Back to Dashboard</a>
+    </div>
+</body>
+</html>
